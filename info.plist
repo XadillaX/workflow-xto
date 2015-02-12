@@ -31,7 +31,7 @@
 				<key>keyword</key>
 				<string>xto</string>
 				<key>runningsubtext</key>
-				<string>Please wait...</string>
+				<string>主人请骚等...</string>
 				<key>script</key>
 				<string>/usr/local/bin/node &lt;&lt;-'CODE'
 require("./xto")("{query}");
@@ -62,9 +62,10 @@ CODE</string>
 			<key>ypos</key>
 			<real>10</real>
 		</dict>
+		<key>icon</key>
+		<dict/>
 	</dict>
 	<key>webaddress</key>
 	<string>http://xcoder.in/</string>
 </dict>
 </plist>
-
