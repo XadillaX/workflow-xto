@@ -5,6 +5,8 @@
   "main": "xto.js",
   "dependencies": {
     "alfred-item": "^1.0.0",
+    "async": "^0.9.0",
+    "fs-extra": "^0.16.3",
     "pinyin": "^2.3.3",
     "sugar": "^1.4.1",
     "xto": "^1.1.2"
