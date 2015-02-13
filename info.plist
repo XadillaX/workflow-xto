@@ -8,8 +8,28 @@
 	<string>Internet</string>
 	<key>connections</key>
 	<dict>
+		<key>2775D1AB-8ED9-4B79-A660-32B408C434B2</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>icon</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 		<key>icon</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>075C692E-9785-4164-B62A-2475F05179AC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>XadillaX</string>
@@ -52,11 +72,67 @@ CODE</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>63</integer>
+				<key>script</key>
+				<string>/usr/local/bin/node &lt;&lt;-'CODE'
+require("./action")("{query}");
+CODE</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.script</string>
+			<key>uid</key>
+			<string>075C692E-9785-4164-B62A-2475F05179AC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>7</integer>
+				<key>hotmod</key>
+				<integer>1179648</integer>
+				<key>hotstring</key>
+				<string>X</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>2775D1AB-8ED9-4B79-A660-32B408C434B2</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
 	<key>uidata</key>
 	<dict>
+		<key>075C692E-9785-4164-B62A-2475F05179AC</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
+		<key>2775D1AB-8ED9-4B79-A660-32B408C434B2</key>
+		<dict>
+			<key>ypos</key>
+			<real>10</real>
+		</dict>
 		<key>F3408545-6500-4333-AEDB-AC51882C6A65</key>
 		<dict>
 			<key>ypos</key>

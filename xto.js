@@ -11,10 +11,9 @@ var AlfredItem = require("alfred-item");
 var han = require("han");
 var async = require("async");
 var fs = require("fs-extra");
-var path = require("path");
+var common = require("./common");
 
-var HISTORY_PATH = path.join(process.env.HOME, ".alfred/xto/history");
-var SHOW_MAX_HISTORY = 8;
+var _rawQuery;
 
 function writeResult(company, num, err, info) {
     if(err && (err.message.indexOf("不存在") < 0 || err.message.indexOf("过期") < 0)) {
@@ -23,13 +22,13 @@ function writeResult(company, num, err, info) {
 
     async.waterfall([
         function(callback) {
-            fs.ensureFile(HISTORY_PATH, function(err) {
+            fs.ensureFile(common.HISTORY_PATH, function(err) {
                 callback(err);
             });
         },
 
         function(callback) {
-            fs.readJson(HISTORY_PATH, function(err, json) {
+            fs.readJson(common.HISTORY_PATH, function(err, json) {
                 return callback(undefined, json || {});
             });
         },
@@ -45,7 +44,9 @@ function writeResult(company, num, err, info) {
                 return res;
             }, []);
 
-            var cur = { num: num };
+            var cur = {
+                num: num
+            };
             var updateTime = Date.create().format("{yyyy}年{MM}月{dd}日 {HH}:{mm}:{ss}");
             if(err) {
                 cur.title = num + "：" + err.message;
@@ -69,13 +70,13 @@ function writeResult(company, num, err, info) {
 
             orig[code] = inner;
 
-            while(orig[code].length > SHOW_MAX_HISTORY) orig[code].pop();
+            while(orig[code].length > common.SHOW_MAX_HISTORY) orig[code].pop();
 
             callback(undefined, orig);
         },
 
         function(json, callback) {
-            fs.writeJson(HISTORY_PATH, json, callback);
+            fs.writeJson(common.HISTORY_PATH, json, callback);
         }
     ], function(err) {
         // 有 err 也没办法
@@ -88,19 +89,19 @@ function writeResult(company, num, err, info) {
 
 function outputWait() {
     var item = new AlfredItem();
-    item.addItem(0, "查查 ... 到哪了", "Nyaa", "icon.png");
+    item.addItem(0 + Math.random(), "查查 ... 到哪了", "Nyaa", "icon.png");
     console.log(item);
 }
 
 function outputNoCompany(name) {
     var item = new AlfredItem();
-    item.addItem(0, "快递公司 " + name + " 貌似不存在哦~", "请输入正确的快递公司", "icon.png");
+    item.addItem(0 + Math.random(), "快递公司 " + name + " 貌似不存在哦~", "请输入正确的快递公司", "icon.png");
     console.log(item);
 }
 
 function outputError(err) {
     var item = new AlfredItem();
-    item.addItem(0, err.message, "查询出错", "icon.png");
+    item.addItem(0 + Math.random(), err.message, "查询出错", "icon.png");
     console.log(item);
 }
 
@@ -164,7 +165,7 @@ function completeCompanies(name) {
         var displayName = company.shortname;
         if(displayName.indexOf(" ") >= 0) displayName = company.url;
         item.addItem(
-            i,
+            i + 1 + Math.random(),
             "【" + company.companyname + "】查查 ... 到哪了",
             company.companyname + " - " + company.shortname + " - " + company.code + " - " + company.url,
             "icon.png", {
@@ -175,17 +176,38 @@ function completeCompanies(name) {
     console.log(item);
 }
 
+function addClean(item, company) {
+    if(!company) {
+        // TODO...
+        company = null;
+    } else {
+        item.addItem(
+            item.count() + 1 + Math.random(),
+            "清除【" + company.companyname + "】查询数据...",
+            "要做好隐私保护工作哦~",
+            "icon.png", {
+                $arg: [{
+                    text: JSON.stringify({
+                        cmd: "clean",
+                        code: company.code,
+                        query: _rawQuery
+                    })
+                }]
+            });
+    }
+}
+
 function outputHistory(company, item, maxItems, prefix) {
     if(!maxItems) return console.log(item);
 
     prefix = prefix.toLowerCase();
-    fs.readJson(HISTORY_PATH, function(err, json) {
-        if(json) {
+    fs.readJson(common.HISTORY_PATH, function(err, json) {
+        if(json && json[company.code]) {
             var c = json[company.code];
             for(var i = 0; i < Math.min(c.length, maxItems); i++) {
                 if(!c[i].num.toLowerCase().startsWith(prefix)) continue;
                 item.addItem(
-                    i + 1,
+                    i + 2 + Math.random(),
                     "【" + company.companyname + "】" + c[i].title,
                     c[i].subtitle,
                     "icon.png", {
@@ -194,11 +216,14 @@ function outputHistory(company, item, maxItems, prefix) {
             }
         }
 
+        addClean(item, company);
+
         return console.log(item);
     });
 }
 
 module.exports = function(query) {
+    _rawQuery = query;
     var rawQuery = query;
     var query = query.split(" ").compact(true);
     var item = new AlfredItem();
@@ -226,27 +251,27 @@ module.exports = function(query) {
         var displayName = company.shortname;
         if(displayName.indexOf(" ") >= 0) displayName = company.code;
         item.addItem(
-            0, 
+            1 + Math.random(),
             "【" + company.companyname + "】查查 ... 到哪了",
             "请输入运单号",
             "icon.png", {
                 autocomplete: displayName + " "
             });
 
-        return outputHistory(company, item, rawQuery.endsWith(" ") ? SHOW_MAX_HISTORY : 0, "");
+        return outputHistory(company, item, rawQuery.endsWith(" ") ? common.SHOW_MAX_HISTORY : 0, "");
     }
 
     var num = query[1];
-    
+
     // 检验正则
     if(!xto.isNumberValid(num, company)) {
         item.addItem(
-            0,
+            1 + Math.random(),
             "【" + company.companyname + "】查查 " + num + " 到哪了",
             "等待输入完整运单号",
             "icon.png");
 
-        return outputHistory(company, item, SHOW_MAX_HISTORY - 1, num);
+        return outputHistory(company, item, common.SHOW_MAX_HISTORY - 1, num);
     }
 
     // 查询快递
@@ -259,17 +284,16 @@ module.exports = function(query) {
 
         var state = xto.stateToText(info.state);
         item.addItem(
-            0,
+            1 + Math.random(),
             company.companyname + "：" + state,
             "当前运单状态",
             "icon.png");
 
         for(var i = 0; i < info.data.length; i++) {
             var data = info.data[i];
-            item.addItem(i + 1, data.context, data.time, "icon.png");
+            item.addItem((i + 2) + Math.random(), data.context, data.time, "icon.png");
         }
 
         console.log(item);
     });
 };
-
