@@ -59,11 +59,11 @@ CODE</string>
 				<key>subtext</key>
 				<string>Nyaa~</string>
 				<key>title</key>
-				<string>查 {query} 到哪了</string>
+				<string>查查 {query} 到哪了</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
-				<true/>
+				<false/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>

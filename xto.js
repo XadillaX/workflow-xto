@@ -87,10 +87,46 @@ function writeResult(company, num, err, info) {
     });
 }
 
+function allHistoryToArray(json) {
+    if(!json) return [];
+
+    var arr = [];
+    for(var key in json) {
+        if(!json.hasOwnProperty(key)) continue;
+        arr.add(json[key]);
+    }
+    return arr;
+}
+
 function outputWait() {
     var item = new AlfredItem();
     item.addItem(0 + Math.random(), "查查 ... 到哪了", "Nyaa", "icon.png");
-    console.log(item);
+
+    fs.readJson(common.HISTORY_PATH, function(err, json) {
+        var arr = allHistoryToArray(json);
+
+        arr = arr.sort(function(a, b) {
+            return (a.time < b.time) ? 1 : (a.time > b.time ? -1 : 0);
+        });
+
+        for(var i = 0; i < Math.min(arr.length, 7); i++) {
+            item.addItem(
+                i + 2 + Math.random(),
+                "【" + arr[i].complete.split(" ")[0] + "】" + arr[i].title,
+                arr[i].subtitle,
+                "icon.png", {
+                    autocomplete: " " + arr[i].complete
+                });
+        }
+
+        item.addItem(1 + Math.random(), "清除所有历史运单记录...", "喵~", "icon.png", {
+            $arg: [
+                { text: JSON.stringify({ cmd: "clean" }) }
+            ]
+        });
+
+        console.log(item);
+    });
 }
 
 function outputNoCompany(name) {
@@ -169,7 +205,7 @@ function completeCompanies(name) {
             "【" + company.companyname + "】查查 ... 到哪了",
             company.companyname + " - " + company.shortname + " - " + company.code + " - " + company.url,
             "icon.png", {
-                autocomplete: displayName + " "
+                autocomplete: " " + displayName + " "
             });
     }
 
@@ -177,24 +213,19 @@ function completeCompanies(name) {
 }
 
 function addClean(item, company) {
-    if(!company) {
-        // TODO...
-        company = null;
-    } else {
-        item.addItem(
-            item.count() + 1 + Math.random(),
-            "清除【" + company.companyname + "】查询数据...",
-            "要做好隐私保护工作哦~",
-            "icon.png", {
-                $arg: [{
-                    text: JSON.stringify({
-                        cmd: "clean",
-                        code: company.code,
-                        query: _rawQuery
-                    })
-                }]
-            });
-    }
+    item.addItem(
+        item.count() + 1 + Math.random(),
+        "清除【" + company.companyname + "】查询数据...",
+        "要做好隐私保护工作哦~",
+        "icon.png", {
+            $arg: [{
+                text: JSON.stringify({
+                    cmd: "clean",
+                    code: company.code,
+                    query: _rawQuery
+                })
+            }]
+        });
 }
 
 function outputHistory(company, item, maxItems, prefix) {
@@ -211,7 +242,7 @@ function outputHistory(company, item, maxItems, prefix) {
                     "【" + company.companyname + "】" + c[i].title,
                     c[i].subtitle,
                     "icon.png", {
-                        autocomplete: c[i].complete
+                        autocomplete: " " + c[i].complete
                     });
             }
         }
@@ -255,7 +286,7 @@ module.exports = function(query) {
             "【" + company.companyname + "】查查 ... 到哪了",
             "请输入运单号",
             "icon.png", {
-                autocomplete: displayName + " "
+                autocomplete: " " + displayName + " "
             });
 
         return outputHistory(company, item, rawQuery.endsWith(" ") ? common.SHOW_MAX_HISTORY : 0, "");
