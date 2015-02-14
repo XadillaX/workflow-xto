@@ -10,5 +10,5 @@ Alfred workflow for XTO.
 
 ## Download
 
-[Click me!](https://github.com/XadillaX/workflow-xto/blob/e9dd70a38289e8abf54001523d3620d218a79b2e/xto.alfredworkflow?raw=true)
+[Click me!](https://github.com/XadillaX/workflow-xto/blob/f3492f5360e600f9c47de44ee92e575bb0a1f34f/xto.alfredworkflow?raw=true)
 
