@@ -70,7 +70,7 @@ function writeResult(company, num, err, info) {
 
             orig[code] = inner;
 
-            while(orig[code].length > common.SHOW_MAX_HISTORY) orig[code].pop();
+            // while(orig[code].length > common.SHOW_MAX_HISTORY) orig[code].pop();
 
             callback(undefined, orig);
         },
