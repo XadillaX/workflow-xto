@@ -1,6 +1,6 @@
 {
   "name": "workerflow-xto",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The Alfred workflow of xto.",
   "main": "xto.js",
   "dependencies": {
