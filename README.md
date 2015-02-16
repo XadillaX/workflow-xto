@@ -1,6 +1,6 @@
 # Workflow XTO
 
-Alfred workflow for XTO.
+Alfred workflow for XTO with 💝.
 
 > Be sure you have your Node.js / io.js installed.
 
