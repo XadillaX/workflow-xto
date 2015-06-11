@@ -1,6 +1,6 @@
 # Workflow XTO
 
-Alfred workflow for XTO with 💝.
+Alfred workflow for XTO.
 
 > Be sure you have your Node.js / io.js installed.
 
@@ -10,5 +10,5 @@ Alfred workflow for XTO with 💝.
 
 ## Download
 
-[Click me!](https://github.com/XadillaX/workflow-xto/blob/f3492f5360e600f9c47de44ee92e575bb0a1f34f/xto.alfredworkflow?raw=true)
+[Click me!](https://github.com/XadillaX/workflow-xto/blob/master/xto.alfredworkflow?raw=true)
 

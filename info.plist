@@ -5,7 +5,7 @@
 	<key>bundleid</key>
 	<string>xto</string>
 	<key>category</key>
-	<string>Internet</string>
+	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>2775D1AB-8ED9-4B79-A660-32B408C434B2</key>
@@ -98,12 +98,6 @@ CODE</string>
 				<integer>0</integer>
 				<key>argument</key>
 				<integer>0</integer>
-				<key>hotkey</key>
-				<integer>7</integer>
-				<key>hotmod</key>
-				<integer>1179648</integer>
-				<key>hotstring</key>
-				<string>X</string>
 				<key>leftcursor</key>
 				<false/>
 				<key>modsmode</key>
