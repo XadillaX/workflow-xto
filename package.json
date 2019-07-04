@@ -9,12 +9,16 @@
     "fs-extra": "^0.23.1",
     "han": "^0.0.7",
     "sugar": "^1.4.1",
-    "xto": "^1.1.7"
+    "xto": "^1.1.7",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "author": "XadillaX",
-  "license": "GPLv2"
+  "license": "GPLv2",
+  "snyk": true
 }
