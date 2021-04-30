@@ -4,9 +4,9 @@ Alfred workflow for XTO.
 
 > Be sure you have your Node.js / io.js installed.
 
-## Snapshot
+## Screenshot
 
-![XTO](http://deathmoon.b0.upaiyun.com/github/xto.gif)
+![XTO](https://dm.nbut.ac.cn/github/xto.gif)
 
 ## Download
 
